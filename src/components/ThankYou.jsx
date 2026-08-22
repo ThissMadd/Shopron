@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import Icon from './Icon';
 import { useCart } from '@/context/CartContext';
+import { trackPixel } from '@/lib/pixel';
 
 export default function ThankYou(){
   const { clearCart } = useCart();
@@ -11,13 +12,9 @@ export default function ThankYou(){
   useEffect(() => {
     clearCart();
 
-    function firePurchase(){
-      if(typeof window.fbq !== 'function') return;
-      window.fbq('track', 'Purchase');
-    }
-    if(typeof window.fbq === 'function') firePurchase();
+    if(typeof window.fbq === 'function') trackPixel('Purchase');
     else {
-      const id = setTimeout(firePurchase, 800);
+      const id = setTimeout(() => trackPixel('Purchase'), 800);
       return () => clearTimeout(id);
     }
   }, []);

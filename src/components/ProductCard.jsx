@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ProductMedia from './ProductMedia';
 import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
+import { trackPixel } from '@/lib/pixel';
 
 export default function ProductCard({ product, showAddToCart = true }){
   const { addToCart } = useCart();
@@ -15,6 +16,13 @@ export default function ProductCard({ product, showAddToCart = true }){
     e.preventDefault();
     e.stopPropagation();
     addToCart(product.slug, 1);
+    trackPixel('AddToCart', {
+      content_ids: [product.slug],
+      content_name: product.title,
+      content_type: 'product',
+      value: product.price,
+      currency: 'USD'
+    });
   }
 
   return (

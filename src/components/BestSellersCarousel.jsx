@@ -5,6 +5,7 @@ import Link from 'next/link';
 import StarRow from './StarRow';
 import { useCart } from '@/context/CartContext';
 import { money } from '@/lib/format';
+import { trackPixel } from '@/lib/pixel';
 
 const PAGE_SIZE = 4;
 
@@ -18,6 +19,13 @@ function BsCard({ p }){
     e.preventDefault();
     e.stopPropagation();
     addToCart(p.slug, 1);
+    trackPixel('AddToCart', {
+      content_ids: [p.slug],
+      content_name: p.title,
+      content_type: 'product',
+      value: p.price,
+      currency: 'USD'
+    });
   }
 
   return (

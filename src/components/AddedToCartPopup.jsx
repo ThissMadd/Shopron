@@ -8,6 +8,7 @@ import Icon from './Icon';
 import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
 import { paymentLinkFor } from '@/data/paymentLinks';
+import { trackPixel } from '@/lib/pixel';
 
 export default function AddedToCartPopup(){
   const { cart, cartCount, lastAdded, clearLastAdded } = useCart();
@@ -34,6 +35,12 @@ export default function AddedToCartPopup(){
   const totalQty = cartLines.reduce((sum, l) => sum + l.item.qty, 0);
 
   function goCheckout(){
+    trackPixel('InitiateCheckout', {
+      content_ids: cartLines.map(l => l.p.slug),
+      value: subtotal,
+      currency: 'USD',
+      num_items: totalQty
+    });
     const link = paymentLinkFor(totalQty);
     if(link){
       window.location.href = link;

@@ -6,6 +6,7 @@ import ProductMedia from '@/components/ProductMedia';
 import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
 import { paymentLinkFor } from '@/data/paymentLinks';
+import { trackPixel } from '@/lib/pixel';
 
 export default function CartView(){
   const { cart, removeFromCart, setQty } = useCart();
@@ -41,6 +42,12 @@ export default function CartView(){
   const totalQty = cartLines.reduce((sum, l) => sum + l.item.qty, 0);
 
   function handleCheckout(){
+    trackPixel('InitiateCheckout', {
+      content_ids: cartLines.map(l => l.p.slug),
+      value: subtotal,
+      currency: 'USD',
+      num_items: totalQty
+    });
     const link = paymentLinkFor(totalQty);
     if(link){
       window.location.href = link;

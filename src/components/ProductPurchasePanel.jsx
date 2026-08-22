@@ -11,6 +11,7 @@ import ShareMenu from './ShareMenu';
 import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
 import { paymentLinkFor } from '@/data/paymentLinks';
+import { trackPixel } from '@/lib/pixel';
 
 export default function ProductPurchasePanel({ product }){
   const { addToCart } = useCart();
@@ -29,11 +30,25 @@ export default function ProductPurchasePanel({ product }){
 
   function handleAddToCart(){
     addToCart(product.slug, qty);
+    trackPixel('AddToCart', {
+      content_ids: [product.slug],
+      content_name: product.title,
+      content_type: 'product',
+      value: product.price * qty,
+      currency: 'USD'
+    });
     setAdded(true);
     setTimeout(() => setAdded(false), 1400);
   }
 
   function handleBuyNow(){
+    trackPixel('InitiateCheckout', {
+      content_ids: [product.slug],
+      content_name: product.title,
+      value: product.price * qty,
+      currency: 'USD',
+      num_items: qty
+    });
     const link = paymentLinkFor(qty);
     if(link){
       window.location.href = link;
