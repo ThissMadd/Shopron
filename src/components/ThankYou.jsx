@@ -10,7 +10,16 @@ export default function ThankYou(){
 
   useEffect(() => {
     clearCart();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    function firePurchase(){
+      if(typeof window.fbq !== 'function') return;
+      window.fbq('track', 'Purchase');
+    }
+    if(typeof window.fbq === 'function') firePurchase();
+    else {
+      const id = setTimeout(firePurchase, 800);
+      return () => clearTimeout(id);
+    }
   }, []);
 
   return (

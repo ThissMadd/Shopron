@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import NewsletterSection from "@/components/NewsletterSection";
 import AddedToCartPopup from "@/components/AddedToCartPopup";
+import MetaPixel from "@/components/MetaPixel";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={poppins.variable}>
       <body>
+        <MetaPixel />
         <CartProvider>
           <Header />
           {children}
