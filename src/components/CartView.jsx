@@ -7,22 +7,24 @@ import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
 import { paymentLinkFor } from '@/data/paymentLinks';
 import { trackPixel } from '@/lib/pixel';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function CartView(){
   const { cart, removeFromCart, setQty } = useCart();
+  const { t } = useLocale();
 
   if(!cart.length){
     return (
       <>
         <div className="page-hero" style={{ padding: '40px 0 46px' }}>
-          <div className="wrap"><h1 style={{ fontSize: '1.8rem' }}>Your Cart</h1></div>
+          <div className="wrap"><h1 style={{ fontSize: '1.8rem' }}>{t('cart.title')}</h1></div>
         </div>
         <div className="wrap">
           <div className="cart-layout">
             <div className="cart-empty" style={{ gridColumn: '1/-1' }}>
-              <p style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text)' }}>Your cart is empty.</p>
-              <p>Browse our certified refrigerants and add a cylinder to get started.</p>
-              <Link href="/products" className="btn btn-primary">Shop All Refrigerants</Link>
+              <p style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text)' }}>{t('cart.empty')}</p>
+              <p>{t('cart.emptyDesc')}</p>
+              <Link href="/products" className="btn btn-primary">{t('cart.shopAll')}</Link>
             </div>
           </div>
         </div>
@@ -53,7 +55,7 @@ export default function CartView(){
       window.location.href = link;
       return;
     }
-    alert('This is a demo storefront — checkout is not wired to a payment processor yet.');
+    alert(t('cart.demoAlert'));
   }
 
   const lines = cartLines.map(({ item, p, lineTotal }) => {
@@ -63,9 +65,9 @@ export default function CartView(){
         <div>
           <Link href={`/products/${p.slug}`} style={{ fontWeight: 700 }}>{p.title}</Link>
           <div style={{ color: 'var(--muted)', fontSize: '.85rem', marginTop: 4 }}>
-            {item.lineTotal != null ? 'Bulk pricing applied' : `${money(p.price)} each`}
+            {item.lineTotal != null ? t('cart.bulkApplied') : t('cart.each', money(p.price))}
           </div>
-          <button className="rm" onClick={() => removeFromCart(p.slug)}>Remove</button>
+          <button className="rm" onClick={() => removeFromCart(p.slug)}>{t('cart.remove')}</button>
         </div>
         <div className="qty-box" style={{ height: 40 }}>
           <button type="button" onClick={() => setQty(p.slug, item.qty - 1)}>–</button>
@@ -80,23 +82,23 @@ export default function CartView(){
   return (
     <>
       <div className="page-hero" style={{ padding: '40px 0 46px' }}>
-        <div className="wrap"><h1 style={{ fontSize: '1.8rem' }}>Your Cart</h1></div>
+        <div className="wrap"><h1 style={{ fontSize: '1.8rem' }}>{t('cart.title')}</h1></div>
       </div>
       <div className="wrap">
         <div className="cart-layout">
           <div>{lines}</div>
           <div className="summary-card">
-            <div className="summary-row"><span>Subtotal</span><span>{money(subtotal)}</span></div>
-            <div className="summary-row"><span>Shipping</span><span style={{ color: 'var(--success)', fontWeight: 700 }}>FREE</span></div>
-            <div className="summary-row total"><span>Estimated Total</span><span>{money(subtotal)}</span></div>
+            <div className="summary-row"><span>{t('cart.subtotal')}</span><span>{money(subtotal)}</span></div>
+            <div className="summary-row"><span>{t('cart.shipping')}</span><span style={{ color: 'var(--success)', fontWeight: 700 }}>{t('cart.free')}</span></div>
+            <div className="summary-row total"><span>{t('cart.estimatedTotal')}</span><span>{money(subtotal)}</span></div>
             <button
               className="btn btn-primary btn-block"
               style={{ marginTop: 16 }}
               onClick={handleCheckout}
             >
-              Proceed to Checkout
+              {t('cart.checkout')}
             </button>
-            <Link href="/products" className="btn btn-outline-dark btn-block" style={{ marginTop: 10 }}>Continue Shopping</Link>
+            <Link href="/products" className="btn btn-outline-dark btn-block" style={{ marginTop: 10 }}>{t('cart.continueShopping')}</Link>
           </div>
         </div>
       </div>

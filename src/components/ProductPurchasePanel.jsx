@@ -12,10 +12,12 @@ import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
 import { paymentLinkFor } from '@/data/paymentLinks';
 import { trackPixel } from '@/lib/pixel';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function ProductPurchasePanel({ product }){
   const { addToCart } = useCart();
   const router = useRouter();
+  const { t } = useLocale();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
 
@@ -66,8 +68,8 @@ export default function ProductPurchasePanel({ product }){
       <div className="pd-rating">
         <StarRow rating={avgRating} />
         {reviews.length
-          ? <a href="#reviews" className="pd-rating-count" onClick={scrollToReviews}>{reviews.length} review{reviews.length !== 1 ? 's' : ''}</a>
-          : <a href="#reviews" className="pd-rating-count" onClick={scrollToReviews}>Be the first to review</a>}
+          ? <a href="#reviews" className="pd-rating-count" onClick={scrollToReviews}>{t('purchase.review', reviews.length)}</a>
+          : <a href="#reviews" className="pd-rating-count" onClick={scrollToReviews}>{t('purchase.beFirstReview')}</a>}
       </div>
 
       {badges.length ? (
@@ -81,12 +83,12 @@ export default function ProductPurchasePanel({ product }){
       <div className="pd-price">
         {product.compareAt ? <span className="price-was">{money(product.compareAt)} USD</span> : null}
         <span className={`price-now ${product.compareAt ? 'on-sale' : ''}`}>{money(product.price)} USD</span>
-        {product.compareAt ? <span className="save-pill">Save {money(product.compareAt - product.price)}</span> : null}
+        {product.compareAt ? <span className="save-pill">{t('purchase.save', money(product.compareAt - product.price))}</span> : null}
       </div>
 
       <div className="pd-trust-lines">
-        <div><Link href="/policies/shipping-policy" className="pd-shipping-link">Shipping</Link> <span className="pd-shipping-note">calculated at checkout.</span></div>
-        <div className="pd-protection"><Icon name="shield" /> Package protection powered by <strong>XCOTTON<sup>®</sup></strong></div>
+        <div><Link href="/policies/shipping-policy" className="pd-shipping-link">{t('purchase.shipping')}</Link> <span className="pd-shipping-note">{t('purchase.shippingNote')}</span></div>
+        <div className="pd-protection"><Icon name="shield" /> {t('purchase.packageProtection')} <strong>XCOTTON<sup>®</sup></strong></div>
       </div>
 
       <p className="pd-intro">{product.intro}</p>
@@ -103,23 +105,23 @@ export default function ProductPurchasePanel({ product }){
           <button type="button" onClick={() => setQty(q => q + 1)}>+</button>
         </div>
         <button className="btn btn-primary btn-block" style={{ flex: 1 }} onClick={handleAddToCart}>
-          {added ? 'Added ✓' : 'Add to Cart'}
+          {added ? t('purchase.added') : t('purchase.addToCart')}
         </button>
       </div>
-      <button className="btn btn-dark btn-block" onClick={handleBuyNow}>Buy Now</button>
+      <button className="btn btn-dark btn-block" onClick={handleBuyNow}>{t('purchase.buyNow')}</button>
 
       {product.bulkPricing ? <BulkBox product={product} /> : null}
 
       <div className="accepted-payments">
-        <span>Accepted payments</span>
+        <span>{t('purchase.acceptedPayments')}</span>
         <PaymentIcons />
-        <div className="secure-checkout"><Icon name="lock" /><span>Secure checkout powered by <strong>Stripe</strong></span></div>
+        <div className="secure-checkout"><Icon name="lock" /><span>{t('purchase.secureCheckout')} <strong>Stripe</strong></span></div>
       </div>
 
       <div className="trust-mini">
-        <div><Icon name="truck" /> Free U.S. shipping</div>
-        <div><Icon name="shield" /> AHRI-700 certified</div>
-        <div><Icon name="check" /> 30-day returns</div>
+        <div><Icon name="truck" /> {t('purchase.freeShipping')}</div>
+        <div><Icon name="shield" /> {t('purchase.certified')}</div>
+        <div><Icon name="check" /> {t('purchase.returns')}</div>
       </div>
 
       <ShareMenu title={product.title} />

@@ -4,13 +4,15 @@ import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PRODUCTS, CATEGORIES, hasCategory } from '@/data/products';
 import ProductGrid from './ProductGrid';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function ProductsBrowser({ initialCategory }){
   const router = useRouter();
   const [activeCat, setActiveCat] = useState(initialCategory || 'all');
   const [sort, setSort] = useState('featured');
+  const { t } = useLocale();
 
-  const chips = [{ slug: 'all', label: 'All Refrigerants' }, ...CATEGORIES];
+  const chips = [{ slug: 'all', label: t('browser.allRefrigerants') }, ...CATEGORIES];
 
   function selectCat(slug){
     setActiveCat(slug);
@@ -40,17 +42,17 @@ export default function ProductsBrowser({ initialCategory }){
         ))}
       </div>
       <div className="section-head">
-        <p style={{ color: 'var(--muted)', margin: 0 }}>{list.length} product{list.length !== 1 ? 's' : ''}</p>
+        <p style={{ color: 'var(--muted)', margin: 0 }}>{t('browser.count', list.length)}</p>
         <select
           className="field"
           style={{ padding: '10px 14px', border: '1px solid var(--border)', borderRadius: 10, fontWeight: 600 }}
           value={sort}
           onChange={(e) => setSort(e.target.value)}
         >
-          <option value="featured">Sort: Featured</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="name-asc">Name: A–Z</option>
+          <option value="featured">{t('browser.sortFeatured')}</option>
+          <option value="price-asc">{t('browser.sortPriceAsc')}</option>
+          <option value="price-desc">{t('browser.sortPriceDesc')}</option>
+          <option value="name-asc">{t('browser.sortNameAsc')}</option>
         </select>
       </div>
       <ProductGrid products={list} />

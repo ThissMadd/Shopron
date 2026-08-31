@@ -5,9 +5,11 @@ import ProductMedia from './ProductMedia';
 import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
 import { trackPixel } from '@/lib/pixel';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function ProductCard({ product, showAddToCart = true }){
   const { addToCart } = useCart();
+  const { t } = useLocale();
   const save = product.compareAt ? product.compareAt - product.price : null;
   const badges = [...product.tags];
   if(save) badges.unshift(`Save ${money(save)}`);
@@ -46,7 +48,7 @@ export default function ProductCard({ product, showAddToCart = true }){
       </Link>
       {showAddToCart ? (
         <div className="card-actions">
-          <button type="button" className="btn btn-outline-ice btn-block" onClick={handleAdd}>Add to cart</button>
+          <button type="button" className="btn btn-outline-ice btn-block" onClick={handleAdd}>{t('productCard.addToCart')}</button>
         </div>
       ) : null}
     </div>

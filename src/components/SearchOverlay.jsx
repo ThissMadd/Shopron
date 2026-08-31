@@ -6,10 +6,12 @@ import { PRODUCTS } from '@/data/products';
 import ProductMedia from './ProductMedia';
 import Icon from './Icon';
 import { money } from '@/lib/format';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function SearchOverlay({ onClose }){
   const [query, setQuery] = useState('');
   const inputRef = useRef(null);
+  const { t } = useLocale();
 
   useEffect(() => {
     inputRef.current?.focus();
@@ -40,11 +42,11 @@ export default function SearchOverlay({ onClose }){
           <input
             ref={inputRef}
             type="text"
-            placeholder="Search for a refrigerant, e.g. R-410A"
+            placeholder={t('search.placeholder')}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
           />
-          <button type="button" className="search-close" onClick={onClose} aria-label="Close search"><Icon name="close" /></button>
+          <button type="button" className="search-close" onClick={onClose} aria-label={t('search.ariaClose')}><Icon name="close" /></button>
         </div>
 
         {query.trim() ? (
@@ -61,10 +63,10 @@ export default function SearchOverlay({ onClose }){
               ))}
             </div>
           ) : (
-            <p className="search-empty">No products match "{query}".</p>
+            <p className="search-empty">{t('search.noResults', query)}</p>
           )
         ) : (
-          <p className="search-empty">Start typing to search our refrigerant catalog.</p>
+          <p className="search-empty">{t('search.start')}</p>
         )}
       </div>
     </div>

@@ -4,17 +4,37 @@ import { useEffect } from 'react';
 import Link from 'next/link';
 import Icon from './Icon';
 import { useCart } from '@/context/CartContext';
+import { findProduct } from '@/data/products';
 import { trackPixel } from '@/lib/pixel';
 
 export default function ThankYou(){
-  const { clearCart } = useCart();
+  const { cart, clearCart } = useCart();
 
   useEffect(() => {
+    const lines = cart
+      .map(item => {
+        const p = findProduct(item.slug);
+        if(!p) return null;
+        const lineTotal = item.lineTotal != null ? item.lineTotal : p.price * item.qty;
+        return { item, p, lineTotal };
+      })
+      .filter(Boolean);
+    const value = lines.reduce((sum, l) => sum + l.lineTotal, 0);
+    const purchaseParams = lines.length
+      ? {
+          content_ids: lines.map(l => l.p.slug),
+          content_type: 'product',
+          num_items: lines.reduce((sum, l) => sum + l.item.qty, 0),
+          value,
+          currency: 'USD'
+        }
+      : null;
+
     clearCart();
 
-    if(typeof window.fbq === 'function') trackPixel('Purchase');
+    if(typeof window.fbq === 'function') trackPixel('Purchase', purchaseParams);
     else {
-      const id = setTimeout(() => trackPixel('Purchase'), 800);
+      const id = setTimeout(() => trackPixel('Purchase', purchaseParams), 800);
       return () => clearTimeout(id);
     }
   }, []);

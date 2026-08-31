@@ -9,9 +9,11 @@ import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
 import { paymentLinkFor } from '@/data/paymentLinks';
 import { trackPixel } from '@/lib/pixel';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function AddedToCartPopup(){
   const { cart, cartCount, lastAdded, clearLastAdded } = useCart();
+  const { t } = useLocale();
 
   useEffect(() => {
     if(!lastAdded) return;
@@ -46,15 +48,15 @@ export default function AddedToCartPopup(){
       window.location.href = link;
       return;
     }
-    alert('This is a demo storefront — checkout is not wired to a payment processor yet.');
+    alert(t('cart.demoAlert'));
   }
 
   return (
     <div className="atc-overlay" onClick={clearLastAdded}>
       <div className="atc-popup" onClick={(e) => e.stopPropagation()}>
         <div className="atc-head">
-          <span className="atc-confirm"><Icon name="check" /> Item added to your cart</span>
-          <button type="button" className="atc-close" onClick={clearLastAdded} aria-label="Close"><Icon name="close" /></button>
+          <span className="atc-confirm"><Icon name="check" /> {t('atc.added')}</span>
+          <button type="button" className="atc-close" onClick={clearLastAdded} aria-label={t('atc.close')}><Icon name="close" /></button>
         </div>
 
         <div className="atc-item">
@@ -62,12 +64,12 @@ export default function AddedToCartPopup(){
           <Link href={`/products/${product.slug}`} onClick={clearLastAdded}>{product.title}</Link>
         </div>
 
-        <Link href="/cart" className="btn btn-outline-dark btn-block" onClick={clearLastAdded}>View cart ({cartCount})</Link>
+        <Link href="/cart" className="btn btn-outline-dark btn-block" onClick={clearLastAdded}>{t('atc.viewCart', cartCount)}</Link>
         <button type="button" className="btn btn-dark btn-block" style={{ marginTop: 10 }} onClick={goCheckout}>
-          Check out • {money(subtotal)}
+          {t('atc.checkout', money(subtotal))}
         </button>
 
-        <button type="button" className="atc-continue" onClick={clearLastAdded}>Continue shopping</button>
+        <button type="button" className="atc-continue" onClick={clearLastAdded}>{t('atc.continueShopping')}</button>
       </div>
     </div>
   );

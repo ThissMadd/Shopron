@@ -2,12 +2,14 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Icon from './Icon';
+import { useLocale } from '@/context/LocaleContext';
 
 export default function ShareMenu({ title }){
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const menuRef = useRef(null);
   const [url, setUrl] = useState('');
+  const { t } = useLocale();
 
   useEffect(() => {
     function onDocClick(){ setOpen(false); }
@@ -37,23 +39,23 @@ export default function ShareMenu({ title }){
   return (
     <div className="share-wrap">
       <button className="share-btn" type="button" onClick={handleShareClick}>
-        <Icon name="share" /> Share
+        <Icon name="share" /> {t('share.share')}
       </button>
       <div ref={menuRef} className={`share-menu ${open ? 'open' : ''}`} onClick={(e) => e.stopPropagation()}>
         <a href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`} target="_blank" rel="noopener noreferrer">
-          <Icon name="facebook" /> Facebook
+          <Icon name="facebook" /> {t('share.facebook')}
         </a>
         <a href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`} target="_blank" rel="noopener noreferrer">
-          <Icon name="twitter" /> X / Twitter
+          <Icon name="twitter" /> {t('share.twitter')}
         </a>
         <a href={`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`} target="_blank" rel="noopener noreferrer">
-          <Icon name="whatsapp" /> WhatsApp
+          <Icon name="whatsapp" /> {t('share.whatsapp')}
         </a>
         <a href={`mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`}>
-          <Icon name="mail" /> Email
+          <Icon name="mail" /> {t('share.email')}
         </a>
         <button type="button" onClick={copyLink}>
-          {copied ? <><Icon name="check" /> Copied!</> : <><Icon name="link" /> Copy link</>}
+          {copied ? <><Icon name="check" /> {t('share.copied')}</> : <><Icon name="link" /> {t('share.copy')}</>}
         </button>
       </div>
     </div>

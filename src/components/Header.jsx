@@ -6,13 +6,14 @@ import { usePathname } from 'next/navigation';
 import Icon from './Icon';
 import SearchOverlay from './SearchOverlay';
 import { useCart } from '@/context/CartContext';
+import { useLocale } from '@/context/LocaleContext';
 
 const NAV_LINKS = [
-  { key: 'home', label: 'Home', href: '/' },
-  { key: 'products', label: 'All Products', href: '/products' },
-  { key: 'contact', label: 'Contact Us', href: '/contact' },
-  { key: 'faq', label: 'FAQ', href: '/faq' },
-  { key: 'track', label: 'Track Your Order', href: '/track-order' }
+  { key: 'home', href: '/' },
+  { key: 'products', href: '/products' },
+  { key: 'contact', href: '/contact' },
+  { key: 'faq', href: '/faq' },
+  { key: 'track', href: '/track-order' }
 ];
 
 function activeKeyFor(pathname){
@@ -32,6 +33,7 @@ export default function Header(){
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
   const { cartCount } = useCart();
+  const { t } = useLocale();
 
   useEffect(() => {
     lastY.current = window.scrollY;
@@ -60,7 +62,7 @@ export default function Header(){
   return (
     <>
       <div className="announce">
-        <strong>Free Shipping</strong> on all U.S. orders &nbsp;•&nbsp; EPA-compliant, factory-sealed refrigerants &nbsp;•&nbsp; 30-day returns
+        {t('announce')}
       </div>
       <header className={`site-header ${hidden ? 'is-hidden' : ''}`}>
         <div className="header-inner">
@@ -70,14 +72,14 @@ export default function Header(){
           <Link href="/" className="logo">SH<span className="dot">◉</span>PRON</Link>
           <nav className="main-nav">
             {NAV_LINKS.map(l => (
-              <Link key={l.key} href={l.href} className={l.key === active ? 'active' : ''}>{l.label}</Link>
+              <Link key={l.key} href={l.href} className={l.key === active ? 'active' : ''}>{t(`nav.${l.key}`)}</Link>
             ))}
           </nav>
           <div className="header-actions">
-            <button className="icon-btn" aria-label="Search" onClick={() => setSearchOpen(true)}>
+            <button className="icon-btn" aria-label={t('search.ariaOpen')} onClick={() => setSearchOpen(true)}>
               <Icon name="search" />
             </button>
-            <Link className="icon-btn" href="/cart" aria-label="Cart">
+            <Link className="icon-btn" href="/cart" aria-label={t('cart.ariaCart')}>
               <Icon name="cart" />
               <span className="cart-count">{cartCount}</span>
             </Link>
@@ -85,7 +87,7 @@ export default function Header(){
         </div>
         <nav className={`mobile-nav ${mobileOpen ? 'open' : ''}`}>
           {NAV_LINKS.map(l => (
-            <Link key={l.key} href={l.href} className={l.key === active ? 'active' : ''} onClick={() => setMobileOpen(false)}>{l.label}</Link>
+            <Link key={l.key} href={l.href} className={l.key === active ? 'active' : ''} onClick={() => setMobileOpen(false)}>{t(`nav.${l.key}`)}</Link>
           ))}
         </nav>
       </header>

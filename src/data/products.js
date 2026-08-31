@@ -10,7 +10,7 @@ export const PRODUCTS = [
     size: "25 lb",
     category: "ac-heat-pumps",
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#d16b86",
     images: [
@@ -34,9 +34,7 @@ export const PRODUCTS = [
       "Professional HVAC service & maintenance"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -212,7 +210,7 @@ export const PRODUCTS = [
     size: "30 lb",
     category: "ac-heat-pumps",
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#8fbf7a",
     images: [
@@ -236,9 +234,7 @@ export const PRODUCTS = [
       "Professional HVAC service & maintenance"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -416,7 +412,7 @@ export const PRODUCTS = [
     size: "30 lb",
     category: "automotive",
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#8fc4dd",
     images: [
@@ -440,9 +436,7 @@ export const PRODUCTS = [
       "Professional HVAC & cooling-system service"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -621,7 +615,7 @@ export const PRODUCTS = [
     size: "24 lb",
     category: "commercial-refrigeration",
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#e0863a",
     images: [
@@ -645,9 +639,7 @@ export const PRODUCTS = [
       "Professional refrigeration service"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -827,7 +819,7 @@ export const PRODUCTS = [
     size: "20.9 lb",
     category: "r22-retrofit",
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#5eb3d6",
     images: [
@@ -851,9 +843,7 @@ export const PRODUCTS = [
       "Professional A2L refrigerant service"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -1029,7 +1019,7 @@ export const PRODUCTS = [
     size: "25 lb",
     category: ["ac-heat-pumps", "commercial-refrigeration"],
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#d9822b",
     images: [
@@ -1053,9 +1043,7 @@ export const PRODUCTS = [
       "Professional HVAC service & R22 retrofits"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -1231,7 +1219,7 @@ export const PRODUCTS = [
     size: "22 lb",
     category: ["ac-heat-pumps", "r22-retrofit"],
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#9aa3a8",
     images: [
@@ -1255,9 +1243,7 @@ export const PRODUCTS = [
       "Professional A2L refrigerant service"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -1412,7 +1398,7 @@ export const PRODUCTS = [
     size: "25 lb",
     category: "commercial-refrigeration",
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#c9722f",
     images: [
@@ -1436,9 +1422,7 @@ export const PRODUCTS = [
       "Professional refrigeration maintenance"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -1591,7 +1575,7 @@ export const PRODUCTS = [
     size: "25 lb",
     category: ["commercial-refrigeration", "r22-retrofit"],
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#a9a49a",
     images: [
@@ -1615,9 +1599,7 @@ export const PRODUCTS = [
       "Professional refrigeration retrofit service"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -1767,7 +1749,7 @@ export const PRODUCTS = [
     size: "25 lb",
     category: ["commercial-refrigeration", "r22-retrofit"],
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#8f9296",
     images: [
@@ -1791,9 +1773,7 @@ export const PRODUCTS = [
       "Food service refrigeration"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
@@ -1943,7 +1923,7 @@ export const PRODUCTS = [
     size: "11 lb",
     category: ["automotive", "r22-retrofit"],
     tags: [],
-    price: 89.00,
+    price: 59.00,
     compareAt: 280.00,
     color: "#9aa0a6",
     images: [
@@ -1967,9 +1947,7 @@ export const PRODUCTS = [
       "Section 609-certified MVAC maintenance"
     ],
     bulkPricing: [
-      { qty: 5, type: "flat", amount: 50 },
-      { qty: 10, type: "percent", amount: 5 },
-      { qty: 15, type: "percent", amount: 10 }
+      { qty: 5, type: "flat", amount: 50 }
     ],
     details: {
       overview: {
