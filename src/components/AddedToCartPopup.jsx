@@ -7,12 +7,13 @@ import ProductMedia from './ProductMedia';
 import Icon from './Icon';
 import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
-import { paymentLinkFor } from '@/data/paymentLinks';
+import { useCheckout } from '@/context/CheckoutContext';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
 export default function AddedToCartPopup(){
   const { cart, cartCount, lastAdded, clearLastAdded } = useCart();
+  const { openCheckout } = useCheckout();
   const { t } = useLocale();
 
   useEffect(() => {
@@ -43,12 +44,8 @@ export default function AddedToCartPopup(){
       currency: 'USD',
       num_items: totalQty
     });
-    const link = paymentLinkFor(totalQty);
-    if(link){
-      window.location.href = link;
-      return;
-    }
-    alert(t('cart.demoAlert'));
+    clearLastAdded();
+    openCheckout(cartLines.map(l => ({ slug: l.p.slug, qty: l.item.qty, lineTotal: l.item.lineTotal })));
   }
 
   return (

@@ -261,6 +261,40 @@ section.section-tight-bottom{ padding-bottom:32px; }
   .atc-popup{ max-width:none; border-radius:14px 14px 0 0; margin-top:0; }
 }
 
+/* ---------- Stripe embedded checkout modal ---------- */
+.checkout-modal-overlay{
+  position:fixed; inset:0; z-index:300; background:rgba(7,24,37,.55);
+  display:flex; justify-content:center; align-items:center; padding:16px;
+  animation:atcFadeIn .18s ease;
+}
+.checkout-modal{
+  position:relative; width:100%; max-width:640px; max-height:92vh; display:flex; flex-direction:column;
+  background:#fff; border-radius:16px; box-shadow:var(--shadow); overflow:hidden;
+  animation:atcSlideIn .22s ease;
+}
+.checkout-modal-head{
+  flex-shrink:0; display:flex; align-items:center; gap:12px; padding:14px 52px 14px 18px;
+  background:var(--navy); color:#fff;
+}
+.checkout-modal-logo{ font-family:var(--font); font-weight:700; font-size:1.05rem; letter-spacing:-.02em; display:flex; align-items:center; gap:2px; }
+.checkout-modal-logo .dot{ color:var(--ice); position:relative; top:1px; }
+.checkout-modal-secure{
+  margin-left:auto; display:flex; align-items:center; gap:6px; font-size:.78rem; font-weight:600; color:var(--ice-soft);
+}
+.checkout-modal-secure svg{ width:14px; height:14px; }
+.checkout-modal-body{ flex:1; overflow-y:auto; background:var(--ice-soft); }
+.checkout-modal-close{
+  position:absolute; top:10px; right:12px; z-index:1; background:rgba(255,255,255,.12); border:none;
+  border-radius:999px; width:30px; height:30px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; color:#fff;
+}
+.checkout-modal-close:hover{ background:rgba(255,255,255,.22); }
+.checkout-modal-close svg{ width:15px; height:15px; }
+@media (max-width: 640px){
+  .checkout-modal-overlay{ padding:0; align-items:flex-end; }
+  .checkout-modal{ max-width:none; max-height:100vh; border-radius:16px 16px 0 0; }
+}
+
 /* ---------- Home testimonials ---------- */
 .testi-summary{ display:flex; align-items:center; justify-content:center; gap:14px; margin:16px 0 32px; flex-wrap:wrap; }
 .testi-summary .star-row svg{ width:20px; height:20px; }

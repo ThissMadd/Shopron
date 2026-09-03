@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Icon from './Icon';
 import StarRow from './StarRow';
@@ -10,13 +9,13 @@ import BulkBox from './BulkBox';
 import ShareMenu from './ShareMenu';
 import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
-import { paymentLinkFor } from '@/data/paymentLinks';
+import { useCheckout } from '@/context/CheckoutContext';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
 export default function ProductPurchasePanel({ product }){
   const { addToCart } = useCart();
-  const router = useRouter();
+  const { openCheckout } = useCheckout();
   const { t } = useLocale();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -51,13 +50,7 @@ export default function ProductPurchasePanel({ product }){
       currency: 'USD',
       num_items: qty
     });
-    const link = paymentLinkFor(qty);
-    if(link){
-      window.location.href = link;
-      return;
-    }
-    addToCart(product.slug, qty);
-    router.push('/cart');
+    openCheckout([{ slug: product.slug, qty }]);
   }
 
   return (
