@@ -4,6 +4,7 @@ import { createContext, useContext, useCallback, useState, useSyncExternalStore 
 
 const CartContext = createContext(null);
 const STORAGE_KEY = 'shopron_cart';
+const MAX_QTY = 5;
 
 const EMPTY_CART = [];
 
@@ -59,9 +60,9 @@ export function CartProvider({ children }){
     const existing = cachedCart.find(i => i.slug === slug);
     let next;
     if(existing){
-      next = cachedCart.map(i => i.slug === slug ? { slug, qty: i.qty + qty } : i);
+      next = cachedCart.map(i => i.slug === slug ? { slug, qty: Math.min(MAX_QTY, i.qty + qty) } : i);
     } else {
-      const item = { slug, qty };
+      const item = { slug, qty: Math.min(MAX_QTY, qty) };
       if(lineTotal != null) item.lineTotal = lineTotal;
       next = [...cachedCart, item];
     }
@@ -76,7 +77,7 @@ export function CartProvider({ children }){
   }, []);
 
   const setQty = useCallback((slug, qty) => {
-    writeCart(cachedCart.map(i => i.slug === slug ? { slug, qty: Math.max(1, qty) } : i));
+    writeCart(cachedCart.map(i => i.slug === slug ? { slug, qty: Math.min(MAX_QTY, Math.max(1, qty)) } : i));
   }, []);
 
   const clearCart = useCallback(() => {

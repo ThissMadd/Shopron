@@ -9,13 +9,12 @@ import BulkBox from './BulkBox';
 import ShareMenu from './ShareMenu';
 import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
-import { useCheckout } from '@/context/CheckoutContext';
+import { checkoutLinkFor } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
 export default function ProductPurchasePanel({ product }){
   const { addToCart } = useCart();
-  const { openCheckout } = useCheckout();
   const { t } = useLocale();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -50,7 +49,7 @@ export default function ProductPurchasePanel({ product }){
       currency: 'USD',
       num_items: qty
     });
-    openCheckout([{ slug: product.slug, qty }]);
+    window.location.href = checkoutLinkFor(qty);
   }
 
   return (
@@ -95,7 +94,7 @@ export default function ProductPurchasePanel({ product }){
         <div className="qty-box">
           <button type="button" onClick={() => setQty(q => Math.max(1, q - 1))}>–</button>
           <input type="text" value={qty} readOnly />
-          <button type="button" onClick={() => setQty(q => q + 1)}>+</button>
+          <button type="button" onClick={() => setQty(q => Math.min(5, q + 1))}>+</button>
         </div>
         <button className="btn btn-primary btn-block" style={{ flex: 1 }} onClick={handleAddToCart}>
           {added ? t('purchase.added') : t('purchase.addToCart')}
