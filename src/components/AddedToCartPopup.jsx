@@ -2,17 +2,18 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { findProduct } from '@/data/products';
 import ProductMedia from './ProductMedia';
 import Icon from './Icon';
 import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
-import { checkoutLinkFor } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
 export default function AddedToCartPopup(){
   const { cart, cartCount, lastAdded, clearLastAdded } = useCart();
+  const router = useRouter();
   const { t } = useLocale();
 
   useEffect(() => {
@@ -43,7 +44,8 @@ export default function AddedToCartPopup(){
       currency: 'USD',
       num_items: totalQty
     });
-    window.location.href = checkoutLinkFor(totalQty);
+    clearLastAdded();
+    router.push('/checkout');
   }
 
   return (
