@@ -891,7 +891,7 @@ footer.site-footer{ background: var(--navy); color:#cfe0e6; }
   animation:atcFadeIn .18s ease;
 }
 .checkout-modal{
-  position:relative; width:100%; max-width:640px; max-height:92vh; display:flex; flex-direction:column;
+  position:relative; width:100%; max-width:1040px; max-height:94vh; display:flex; flex-direction:column;
   background:#fff; border-radius:16px; box-shadow:var(--shadow); overflow:hidden;
   animation:atcSlideIn .22s ease;
 }
