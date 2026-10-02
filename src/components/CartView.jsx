@@ -1,17 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { findProduct } from '@/data/products';
 import ProductMedia from '@/components/ProductMedia';
 import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
+import { checkoutLinkFor } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
 export default function CartView(){
   const { cart, removeFromCart, setQty } = useCart();
-  const router = useRouter();
   const { t } = useLocale();
 
   if(!cart.length){
@@ -51,7 +50,7 @@ export default function CartView(){
       currency: 'USD',
       num_items: totalQty
     });
-    router.push('/checkout');
+    window.location.href = checkoutLinkFor(totalQty);
   }
 
   const lines = cartLines.map(({ item, p, lineTotal }) => {

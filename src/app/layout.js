@@ -4,7 +4,10 @@ import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import { LocaleProvider } from "@/context/LocaleContext";
 import { DEFAULT_LOCALE, LOCALES } from "@/i18n/dictionaries";
-import SiteChrome from "@/components/SiteChrome";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import NewsletterSection from "@/components/NewsletterSection";
+import AddedToCartPopup from "@/components/AddedToCartPopup";
 import MetaPixel from "@/components/MetaPixel";
 
 const poppins = Poppins({
@@ -30,7 +33,11 @@ export default async function RootLayout({ children }) {
         <MetaPixel />
         <LocaleProvider initialLocale={locale}>
           <CartProvider>
-            <SiteChrome>{children}</SiteChrome>
+            <Header />
+            {children}
+            <NewsletterSection />
+            <Footer />
+            <AddedToCartPopup />
           </CartProvider>
         </LocaleProvider>
       </body>

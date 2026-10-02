@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import Icon from './Icon';
 import StarRow from './StarRow';
 import PaymentIcons from './PaymentIcons';
@@ -10,12 +9,12 @@ import BulkBox from './BulkBox';
 import ShareMenu from './ShareMenu';
 import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
+import { checkoutLinkFor } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
 export default function ProductPurchasePanel({ product }){
-  const { addToCart, clearLastAdded } = useCart();
-  const router = useRouter();
+  const { addToCart } = useCart();
   const { t } = useLocale();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -50,9 +49,7 @@ export default function ProductPurchasePanel({ product }){
       currency: 'USD',
       num_items: qty
     });
-    addToCart(product.slug, qty);
-    clearLastAdded();
-    router.push('/checkout');
+    window.location.href = checkoutLinkFor(qty);
   }
 
   return (
