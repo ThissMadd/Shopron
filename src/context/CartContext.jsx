@@ -58,16 +58,21 @@ export function CartProvider({ children }){
 
   const addToCart = useCallback((slug, qty = 1, lineTotal) => {
     const existing = cachedCart.find(i => i.slug === slug);
+    const otherTotal = cachedCart.reduce((sum, i) => sum + (i.slug === slug ? 0 : i.qty), 0);
+    const allowed = Math.max(0, MAX_QTY - otherTotal);
+    const nextQty = Math.min(allowed, (existing ? existing.qty : 0) + qty);
+    if(nextQty <= 0) return;
+
     let next;
     if(existing){
-      next = cachedCart.map(i => i.slug === slug ? { slug, qty: Math.min(MAX_QTY, i.qty + qty) } : i);
+      next = cachedCart.map(i => i.slug === slug ? { slug, qty: nextQty } : i);
     } else {
-      const item = { slug, qty: Math.min(MAX_QTY, qty) };
+      const item = { slug, qty: nextQty };
       if(lineTotal != null) item.lineTotal = lineTotal;
       next = [...cachedCart, item];
     }
     writeCart(next);
-    setLastAdded({ slug, qty, ts: Date.now() });
+    setLastAdded({ slug, qty: nextQty - (existing ? existing.qty : 0), ts: Date.now() });
   }, []);
 
   const clearLastAdded = useCallback(() => setLastAdded(null), []);
@@ -77,7 +82,9 @@ export function CartProvider({ children }){
   }, []);
 
   const setQty = useCallback((slug, qty) => {
-    writeCart(cachedCart.map(i => i.slug === slug ? { slug, qty: Math.min(MAX_QTY, Math.max(1, qty)) } : i));
+    const otherTotal = cachedCart.reduce((sum, i) => sum + (i.slug === slug ? 0 : i.qty), 0);
+    const maxForThis = Math.max(1, MAX_QTY - otherTotal);
+    writeCart(cachedCart.map(i => i.slug === slug ? { slug, qty: Math.min(maxForThis, Math.max(1, qty)) } : i));
   }, []);
 
   const clearCart = useCallback(() => {
