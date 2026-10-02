@@ -5,9 +5,7 @@ export const QTY_PLANS = {
   2: 'plan_oFRB900SwHiId',
   3: 'plan_TjtlpcBXf0Dzv',
   4: 'plan_YRvmWKCeQpSb3',
-  // TODO: quantity 5 was given the same plan ID as quantity 4 — needs the
-  // correct $295 plan link.
-  5: 'plan_YRvmWKCeQpSb3',
+  5: 'plan_65fRk3T5Tk9r5',
 };
 
 export function whopPlanFor(qty){
