@@ -5,13 +5,12 @@ import { findProduct } from '@/data/products';
 import ProductMedia from '@/components/ProductMedia';
 import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
-import { useCheckout } from '@/context/CheckoutContext';
+import { checkoutLinkFor } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
 export default function CartView(){
   const { cart, removeFromCart, setQty } = useCart();
-  const { openCheckout } = useCheckout();
   const { t } = useLocale();
 
   if(!cart.length){
@@ -51,7 +50,8 @@ export default function CartView(){
       currency: 'USD',
       num_items: totalQty
     });
-    openCheckout(cartLines.map(l => ({ slug: l.p.slug, qty: l.item.qty })));
+    const link = checkoutLinkFor(totalQty);
+    if(link) window.location.href = link;
   }
 
   const lines = cartLines.map(({ item, p, lineTotal }) => {

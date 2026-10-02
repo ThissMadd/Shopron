@@ -9,13 +9,12 @@ import BulkBox from './BulkBox';
 import ShareMenu from './ShareMenu';
 import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
-import { useCheckout } from '@/context/CheckoutContext';
+import { checkoutLinkFor } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
 export default function ProductPurchasePanel({ product }){
   const { addToCart } = useCart();
-  const { openCheckout } = useCheckout();
   const { t } = useLocale();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -50,7 +49,8 @@ export default function ProductPurchasePanel({ product }){
       currency: 'USD',
       num_items: qty
     });
-    openCheckout([{ slug: product.slug, qty }]);
+    const link = checkoutLinkFor(qty);
+    if(link) window.location.href = link;
   }
 
   return (
