@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { WhopElements, Checkout, CheckoutElement } from '@whop/elements-react';
 import { getWhopElements } from '@/lib/whopElements';
 import { findProduct } from '@/data/products';
-import { WHOP_PLAN_ID } from '@/data/whopPlan';
+import { whopPlanFor } from '@/data/whopPlan';
 import { useCheckout } from '@/context/CheckoutContext';
 import { useCart } from '@/context/CartContext';
 import { trackPixel } from '@/lib/pixel';
@@ -26,8 +26,9 @@ export default function WhopCheckoutModal(){
   }, [checkoutCart]);
 
   const totalQty = lines.reduce((sum, l) => sum + l.qty, 0);
+  const planId = whopPlanFor(totalQty);
 
-  if(!checkoutCart || !totalQty) return null;
+  if(!checkoutCart || !totalQty || !planId) return null;
 
   function handleComplete(payload){
     if(payload.result !== 'payment') return;
@@ -55,8 +56,7 @@ export default function WhopCheckoutModal(){
         <div className="checkout-modal-body">
           <WhopElements elements={getWhopElements()}>
             <Checkout
-              plan={WHOP_PLAN_ID}
-              quantity={totalQty}
+              plan={planId}
               returnUrl={typeof window !== 'undefined' ? `${window.location.origin}/thank-you` : undefined}
               onComplete={handleComplete}
             >
