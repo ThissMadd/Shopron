@@ -7,7 +7,7 @@ import ProductMedia from './ProductMedia';
 import Icon from './Icon';
 import { money } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
-import { checkoutLinkFor } from '@/data/checkoutLink';
+import { CHECKOUT_LINK } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
 
@@ -43,8 +43,7 @@ export default function AddedToCartPopup(){
       currency: 'USD',
       num_items: totalQty
     });
-    const link = checkoutLinkFor(totalQty);
-    if(link) window.location.href = link;
+    window.location.href = CHECKOUT_LINK;
   }
 
   return (

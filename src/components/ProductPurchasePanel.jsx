@@ -5,18 +5,18 @@ import Link from 'next/link';
 import Icon from './Icon';
 import StarRow from './StarRow';
 import PaymentIcons from './PaymentIcons';
-import BulkBox from './BulkBox';
 import ShareMenu from './ShareMenu';
 import { money, tagBadgeClass } from '@/lib/format';
 import { useCart } from '@/context/CartContext';
-import { checkoutLinkFor } from '@/data/checkoutLink';
+import { CHECKOUT_LINK } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
+
+const qty = 1;
 
 export default function ProductPurchasePanel({ product }){
   const { addToCart } = useCart();
   const { t } = useLocale();
-  const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
 
   const badges = [...product.tags];
@@ -49,8 +49,7 @@ export default function ProductPurchasePanel({ product }){
       currency: 'USD',
       num_items: qty
     });
-    const link = checkoutLinkFor(qty);
-    if(link) window.location.href = link;
+    window.location.href = CHECKOUT_LINK;
   }
 
   return (
@@ -92,18 +91,11 @@ export default function ProductPurchasePanel({ product }){
       ) : null}
 
       <div className="qty-row">
-        <div className="qty-box">
-          <button type="button" onClick={() => setQty(q => Math.max(1, q - 1))}>–</button>
-          <input type="text" value={qty} readOnly />
-          <button type="button" onClick={() => setQty(q => Math.min(5, q + 1))}>+</button>
-        </div>
         <button className="btn btn-primary btn-block" style={{ flex: 1 }} onClick={handleAddToCart}>
           {added ? t('purchase.added') : t('purchase.addToCart')}
         </button>
       </div>
       <button className="btn btn-dark btn-block" onClick={handleBuyNow}>{t('purchase.buyNow')}</button>
-
-      {product.bulkPricing ? <BulkBox product={product} /> : null}
 
       <div className="accepted-payments">
         <span>{t('purchase.acceptedPayments')}</span>

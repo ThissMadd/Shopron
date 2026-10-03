@@ -4,7 +4,7 @@ import { createContext, useContext, useCallback, useState, useSyncExternalStore 
 
 const CartContext = createContext(null);
 const STORAGE_KEY = 'shopron_cart';
-const MAX_QTY = 5;
+const MAX_QTY = 1;
 
 const EMPTY_CART = [];
 

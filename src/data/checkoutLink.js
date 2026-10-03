@@ -1,6 +1,3 @@
-import { whopPlanFor } from './whopPlan';
+import { WHOP_PLAN_ID } from './whopPlan';
 
-export function checkoutLinkFor(qty){
-  const planId = whopPlanFor(qty);
-  return planId ? `https://whop.com/checkout/${planId}` : null;
-}
+export const CHECKOUT_LINK = `https://whop.com/checkout/${WHOP_PLAN_ID}`;
