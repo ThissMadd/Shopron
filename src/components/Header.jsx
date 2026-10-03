@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Icon from './Icon';
 import SearchOverlay from './SearchOverlay';
-import { useCart } from '@/context/CartContext';
 import { useLocale } from '@/context/LocaleContext';
 
 const NAV_LINKS = [
@@ -32,7 +31,6 @@ export default function Header(){
   const [searchOpen, setSearchOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const lastY = useRef(0);
-  const { cartCount } = useCart();
   const { t } = useLocale();
 
   useEffect(() => {
@@ -79,10 +77,6 @@ export default function Header(){
             <button className="icon-btn" aria-label={t('search.ariaOpen')} onClick={() => setSearchOpen(true)}>
               <Icon name="search" />
             </button>
-            <Link className="icon-btn" href="/cart" aria-label={t('cart.ariaCart')}>
-              <Icon name="cart" />
-              <span className="cart-count">{cartCount}</span>
-            </Link>
           </div>
         </div>
         <nav className={`mobile-nav ${mobileOpen ? 'open' : ''}`}>
