@@ -54,7 +54,7 @@ export default async function ProductDetailPage({ params }){
       <section className="section section-alt">
         <div className="wrap">
           <div className="section-head"><div><span className="eyebrow eyebrow-normal">You may also need</span><h2>Related products</h2></div></div>
-          <ProductGrid products={relatedList} showAddToCart={false} />
+          <ProductGrid products={relatedList} />
         </div>
       </section>
 

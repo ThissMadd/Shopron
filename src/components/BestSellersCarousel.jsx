@@ -3,30 +3,14 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import StarRow from './StarRow';
-import { useCart } from '@/context/CartContext';
 import { money } from '@/lib/format';
-import { trackPixel } from '@/lib/pixel';
 
 const PAGE_SIZE = 4;
 
 function BsCard({ p }){
-  const { addToCart } = useCart();
   const reviews = p.details?.reviews || [];
   const avg = reviews.length ? reviews.reduce((s, r) => s + r.rating, 0) / reviews.length : 0;
   const save = p.compareAt ? p.compareAt - p.price : null;
-
-  function handleAdd(e){
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart(p.slug, 1);
-    trackPixel('AddToCart', {
-      content_ids: [p.slug],
-      content_name: p.title,
-      content_type: 'product',
-      value: p.price,
-      currency: 'USD'
-    });
-  }
 
   return (
     <div className="bs-card">
@@ -46,9 +30,6 @@ function BsCard({ p }){
           {p.compareAt ? <span className="bs-was">{money(p.compareAt)} USD</span> : null}
           <span className="bs-now">{money(p.price)} USD</span>
         </div>
-      </div>
-      <div className="bs-actions">
-        <button type="button" className="btn btn-outline-ice btn-block" onClick={handleAdd}>Add to cart</button>
       </div>
     </div>
   );
