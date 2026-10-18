@@ -20,9 +20,6 @@ const poppins = Poppins({
 export const metadata = {
   title: "Shopron — Certified Refrigerants, Fast & EPA-Compliant",
   description: "Shopron supplies certified R-410A, R-134a, R-404A, R-32, R-22 and other refrigerants in bulk cylinders — free U.S. shipping, EPA-compliant, 30-day returns.",
-  verification: {
-    google: "mUS1ZZmm0ADaV-osP3dnOjP_1DEOpAKbaYPhiSiCNHM",
-  },
 };
 
 export default async function RootLayout({ children }) {
