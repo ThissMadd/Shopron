@@ -95,7 +95,7 @@ export default function ProductPurchasePanel({ product }){
         <div className="qty-box">
           <button type="button" onClick={() => setQty(q => Math.max(1, q - 1))}>–</button>
           <input type="text" value={qty} readOnly />
-          <button type="button" onClick={() => setQty(q => Math.min(5, q + 1))}>+</button>
+          <button type="button" onClick={() => setQty(q => q + 1)}>+</button>
         </div>
         <button className="btn btn-primary btn-block" style={{ flex: 1 }} onClick={handleAddToCart}>
           {added ? t('purchase.added') : t('purchase.addToCart')}
