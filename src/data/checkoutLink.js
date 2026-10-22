@@ -1,6 +1,5 @@
-import { whopPlanFor } from './whopPlan';
+const SHOPIFY_VARIANT_ID = '54343109247304';
 
 export function checkoutLinkFor(qty){
-  const planId = whopPlanFor(qty);
-  return planId ? `https://whop.com/checkout/${planId}` : null;
+  return `https://pufrwt-uf.myshopify.com/cart/${SHOPIFY_VARIANT_ID}:${qty}`;
 }
