@@ -1,11 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import Icon from './Icon';
 import StarRow from './StarRow';
 import PaymentIcons from './PaymentIcons';
 import ShareMenu from './ShareMenu';
 import { money, tagBadgeClass } from '@/lib/format';
+import { useCart } from '@/context/CartContext';
 import { CHECKOUT_LINK } from '@/data/checkoutLink';
 import { trackPixel } from '@/lib/pixel';
 import { useLocale } from '@/context/LocaleContext';
@@ -13,7 +15,9 @@ import { useLocale } from '@/context/LocaleContext';
 const qty = 1;
 
 export default function ProductPurchasePanel({ product }){
+  const { addToCart } = useCart();
   const { t } = useLocale();
+  const [added, setAdded] = useState(false);
 
   const badges = [...product.tags];
   const reviews = product.details?.reviews || [];
@@ -22,6 +26,19 @@ export default function ProductPurchasePanel({ product }){
   function scrollToReviews(e){
     e.preventDefault();
     document.getElementById('reviews')?.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function handleAddToCart(){
+    addToCart(product.slug, qty);
+    trackPixel('AddToCart', {
+      content_ids: [product.slug],
+      content_name: product.title,
+      content_type: 'product',
+      value: product.price * qty,
+      currency: 'USD'
+    });
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1400);
   }
 
   function handleBuyNow(){
@@ -73,6 +90,11 @@ export default function ProductPurchasePanel({ product }){
         </div>
       ) : null}
 
+      <div className="qty-row">
+        <button className="btn btn-primary btn-block" style={{ flex: 1 }} onClick={handleAddToCart}>
+          {added ? t('purchase.added') : t('purchase.addToCart')}
+        </button>
+      </div>
       <button className="btn btn-dark btn-block" onClick={handleBuyNow}>{t('purchase.buyNow')}</button>
 
       <div className="accepted-payments">
